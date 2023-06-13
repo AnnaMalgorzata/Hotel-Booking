@@ -2,12 +2,11 @@
 
 public class Reservation
 {
-    //cena końcowa = cena za pokój * ilość nocy
-    //data początkowa
-    //data końcowa
-    public Guest MyGuest { get; set; }
-    public Room MyRoom { get; set; }
+    public int ReservationId { get; set; }
+    public DataTime DateFrom { get; set; }
+    public DataTime DateTo { get; set; }
+    public Guest Guest { get; set; }
+    public Room Room { get; set; }
+    public decimal Price { get; set; }
 
-    //wiele rejestracji do jednego pokoju?? || wiele do wielu??
-    //rejestracja może być na jedną osobę, ale jedna osoba może mieć wiele rejestracji
 }
