@@ -103,12 +103,10 @@ public class HotelContext : DbContext
             .HasForeignKey(s => s.CurrentGuestId);
 
         modelBuilder.Entity<Room>()
-           .ToTable("rooms")
            .HasMany<Reservation>(s => s.Reservations)
            .WithMany(g => g.Rooms);
 
         modelBuilder.Entity<Guest>()
-           .ToTable("guests")
            .HasMany<Room>(s => s.Rooms)
            .WithMany(g => g.Guests);
     }
