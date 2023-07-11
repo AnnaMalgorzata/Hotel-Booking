@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("rooms")]
 public class Room
 {
     public int RoomId { get; set; }
@@ -11,6 +10,5 @@ public class Room
     public int Capacity { get; set; }
     public decimal PricePerNight { get; set; }
 
-    public ICollection<Guest> Guests { get; set; }
     public ICollection<Reservation> Reservations { get; set; }
 }

@@ -18,97 +18,59 @@ public class HotelContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
-        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=HotelBooking;Trusted_Connection=True;");
+        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=HotelBooking;User Id=sa;Password=Secret@Passw0rd;");
 
     }
 
-    public DbSet<Dictionary<string, object>> Guests => Set<Dictionary<string, object>>("Guest");
-    public DbSet<Dictionary<string, object>> Reservations => Set<Dictionary<string, object>>("Reservation");
-    public DbSet<Dictionary<string, object>> Rooms => Set<Dictionary<string, object>>("Room");
+    public DbSet<Guest> Guests { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<Room> Rooms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Guest>(
             g =>
             {
-                g.Property(g => g.GuestId)
-                    .HasColumnName("guest_id")
-                    .HasColumnType("int");
-                g.Property(g => g.Firstname)
-                    .HasColumnName("firstname")
-                    .HasColumnType("string");
-                g.Property(g => g.Lastname)
-                    .HasColumnName("lastname")
-                    .HasColumnType("string");
-                g.Property(g => g.Email)
-                    .HasColumnName("email")
-                    .HasColumnType("string");
-                g.Property(g => g.PhoneNumber)
-                    .HasColumnName("phone_number")
-                    .HasColumnType("string");
-                g.Property(g => g.DateBirth)
-                    .HasColumnName("date_birth")
-                    .HasColumnType("datetime");
+                g.Property(g => g.PhoneNumber).HasMaxLength(9);
+                g.Property(g => g.Email).HasMaxLength(100);
+                g.HasIndex(g=> g.Email).IsUnique();
+                g.ToTable("Guests");
             });
 
         modelBuilder.Entity<Reservation>(
             re =>
             {
-                re.Property(e => e.ReservationId)
-                    .HasColumnName("reservation_id")
-                    .HasColumnType("int");
-                re.Property(e => e.DateFrom)
-                    .HasColumnName("date_from")
-                    .HasColumnType("datetime");
-                re.Property(e => e.DateTo)
-                    .HasColumnName("date_to")
-                    .HasColumnType("datetime");
                 re.Property(e => e.Price)
-                    .HasColumnName("price")
                     .HasColumnType("decimal(18,2)");
-                re.Property(e => e.CurrentGuestId)
-                    .HasColumnName("guest_id")
-                    .HasColumnType("int");
+                re.ToTable("Reservations");
             });
 
         modelBuilder.Entity<Room>(
             ro =>
             {
-                ro.Property(e => e.RoomId)
-                    .HasColumnName("room_id")
-                    .HasColumnType("int");
-                ro.Property(e => e.Number)
-                    .HasColumnName("room_number")
-                    .HasColumnType("int");
-                ro.Property(e => e.Floor)
-                    .HasColumnName("floor")
-                    .HasColumnType("int");
+                ro.HasIndex(ro => ro.Number).IsUnique();
                 ro.Property(e => e.Type)
                     .HasConversion(
                         v => v.ToString(),
                         v => (RoomType)Enum.Parse(typeof(RoomType), v))
-                    .HasColumnName("room_type")
-                    .HasColumnType("nvarchar(Max)");
-                ro.Property(e => e.Capacity)
-                    .HasColumnName("capacity")
-                    .HasColumnType("int");
+                    .HasColumnType("nvarchar(20)");
                 ro.Property(e => e.PricePerNight)
-                    .HasColumnName("price_per_night")
                     .HasColumnType("decimal(18,2)");
+                ro.ToTable("Rooms");
             });
 
         modelBuilder.Entity<Reservation>()
             .HasOne<Guest>(s => s.Guest)
             .WithMany(g => g.Reservations)
-            .HasForeignKey(s => s.CurrentGuestId);
+            .HasForeignKey(s => s.GuestId);
 
         modelBuilder.Entity<Room>()
            .HasMany<Reservation>(s => s.Reservations)
-           .WithMany(g => g.Rooms);
-
-        modelBuilder.Entity<Guest>()
-           .HasMany<Room>(s => s.Rooms)
-           .WithMany(g => g.Guests);
+           .WithMany(g => g.Rooms)
+           .UsingEntity<Dictionary<string, object>>("RoomsReservations",
+                x => x.HasOne<Reservation>().WithMany().HasForeignKey("ReservationId"),
+                x => x.HasOne<Room>().WithMany().HasForeignKey("RoomId"),
+                x => x.ToTable("RoomsReservations"));
     }
 }
 
