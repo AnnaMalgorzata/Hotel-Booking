@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Room
 {
@@ -8,4 +9,6 @@ public class Room
     public RoomType Type { get; set; }
     public int Capacity { get; set; }
     public decimal PricePerNight { get; set; }
+
+    public ICollection<Reservation> Reservations { get; set; }
 }
