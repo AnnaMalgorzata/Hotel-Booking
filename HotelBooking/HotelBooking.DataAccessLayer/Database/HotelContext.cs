@@ -1,25 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace HotelBooking.DataAccessLayer.Database;
 
 public class HotelContext : DbContext
 {
-    public HotelContext()
-    {
+    private readonly IConfiguration _configuration;
 
+    public HotelContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
-        optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=HotelBooking;User Id=sa;Password=Secret@Passw0rd;");
-
+        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Database"));
     }
 
     public DbSet<Guest> Guests { get; set; }
