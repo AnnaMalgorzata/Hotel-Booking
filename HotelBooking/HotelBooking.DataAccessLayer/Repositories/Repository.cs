@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
 internal class Repository<T> : IRepository<T> where T : class
@@ -24,7 +18,7 @@ internal class Repository<T> : IRepository<T> where T : class
 
     public IEnumerable<T> GetAll()
     {
-        return Context.Set<T>().ToList();
+        return Context.Set<T>();
     }
 
     public void Add(T entity)
