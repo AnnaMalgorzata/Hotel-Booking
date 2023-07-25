@@ -1,7 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿using HotelBooking.DataAccessLayer.Entities;
+using System.Linq.Expressions;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
-public interface IRepository<T> where T : class
+public interface IRepository<T> where T : Entity
 {
     T Get(int id);
     IEnumerable<T> GetAll();
