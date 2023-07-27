@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBooking.DataAccessLayer.Entities;
+using HotelBooking.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
-internal class Repository<T> : IRepository<T> where T : class
+internal class Repository<T> : IRepository<T> where T : Entity
 {
     protected readonly DbContext Context;
 

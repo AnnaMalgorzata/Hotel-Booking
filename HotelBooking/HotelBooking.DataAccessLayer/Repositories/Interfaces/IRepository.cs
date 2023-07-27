@@ -1,7 +1,7 @@
 ﻿using HotelBooking.DataAccessLayer.Entities;
 using System.Linq.Expressions;
 
-namespace HotelBooking.DataAccessLayer.Repositories;
+namespace HotelBooking.DataAccessLayer.Repositories.Interfaces;
 public interface IRepository<T> where T : Entity
 {
     T Get(int id);

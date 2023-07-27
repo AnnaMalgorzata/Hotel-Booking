@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBooking.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
 internal class UnitOfWork : IUnitOfWork

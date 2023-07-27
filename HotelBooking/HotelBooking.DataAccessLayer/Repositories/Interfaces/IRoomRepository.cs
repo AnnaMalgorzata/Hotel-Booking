@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelBooking.DataAccessLayer.Entities;
 
-namespace HotelBooking.DataAccessLayer.Repositories
+namespace HotelBooking.DataAccessLayer.Repositories.Interfaces;
+
+public interface IRoomRepository : IRepository<Room>
 {
-    public interface IRoomRepository : IRepository<Room>
-    {
 
-    }
 }
+

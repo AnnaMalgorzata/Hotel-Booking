@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelBooking.DataAccessLayer.Entities
+﻿namespace HotelBooking.DataAccessLayer.Entities;
+abstract public class Entity
 {
-    internal class Entity
-    {
-    }
+
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBooking.DataAccessLayer.Entities;
+using HotelBooking.DataAccessLayer.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
 internal class ReservationRepository : Repository<Reservation>, IReservationRepository
