@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿namespace HotelBooking.DataAccessLayer.Entities;
 public enum RoomType
 {
 	Apartment,

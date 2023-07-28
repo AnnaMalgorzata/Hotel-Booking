@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-public class Guest
+﻿namespace HotelBooking.DataAccessLayer.Entities;
+public class Guest : Entity
 {
     public int GuestId { get; set; }
     public string Firstname { get; set; }

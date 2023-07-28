@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-public class Reservation
+﻿namespace HotelBooking.DataAccessLayer.Entities;
+public class Reservation : Entity
 {
     public int ReservationId { get; set; }
     public DateTime DateFrom { get; set; }

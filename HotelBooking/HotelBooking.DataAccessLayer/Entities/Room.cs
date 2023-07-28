@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-public class Room
+﻿namespace HotelBooking.DataAccessLayer.Entities;
+public class Room : Entity
 {
     public int RoomId { get; set; }
     public int Number { get; set; }
