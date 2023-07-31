@@ -7,7 +7,7 @@ public interface IRepository<T> where T : Entity
     Task<T> Get(int id);
     Task<IEnumerable<T>> GetAll();
     Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
-    Task Add(T entity);
-    Task Remove(T entity);
-    Task RemoveRange(IEnumerable<T> entities);
+    void Add(T entity);
+    void Remove(T entity);
+    void RemoveRange(IEnumerable<T> entities);
 }
