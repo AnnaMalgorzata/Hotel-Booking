@@ -15,7 +15,7 @@ internal class Repository<T> : IRepository<T> where T : Entity
 
     public async Task<T> Get(int id)
     {
-        return Context.Set<T>().Find(id);
+        return await Context.Set<T>().FindAsync(id); 
     }
 
     public async Task<IEnumerable<T>> GetAll()
@@ -23,9 +23,9 @@ internal class Repository<T> : IRepository<T> where T : Entity
         return Context.Set<T>();
     }
 
-    public async Task Add(T entity)
+    public void Add(T entity)
     {
-        Context.Set<T>().Add(entity);
+        Context.Set<T>().AddAsync(entity);
     }
 
     public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
@@ -34,12 +34,12 @@ internal class Repository<T> : IRepository<T> where T : Entity
     }
 
 
-    public async Task Remove(T entity)
+    public void Remove(T entity)
     {
         Context.Set<T>().Remove(entity);
     }
 
-    public async Task RemoveRange(IEnumerable<T> entities)
+    public void RemoveRange(IEnumerable<T> entities)
     {
         Context.Set<T>().RemoveRange(entities);
     }
