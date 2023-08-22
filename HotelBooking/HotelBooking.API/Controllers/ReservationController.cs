@@ -1,10 +1,25 @@
-﻿namespace HotelBooking.API.Controllers;
+﻿using HotelBooking.BusinessLogic.Dtos;
+using HotelBooking.BusinessLogic.Services.Abstraction;
+using Microsoft.AspNetCore.Mvc;
 
-public class ReservationController
+namespace HotelBooking.API.Controllers;
+
+[Route("reservations")]
+public class ReservationController : ControllerBase
 {
-    //tu używamy naszego serwisu
-    //metoda typu GET
+    private IReservationService _iReservationService;
 
-    // GET api/Reservations/{id}
-    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ReservationDto>> GetReservation(int id)
+    {
+        var todoItem = await _iReservationService.GetReservation(id);
+
+        if (todoItem == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(todoItem);
+    }
+
 }

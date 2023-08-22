@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelBooking.BusinessLogic.Dtos;
 
 namespace HotelBooking.BusinessLogic.Services.Abstraction;
-public class IReservationService
+public interface IReservationService
 {
+    public Task<ReservationDto> GetReservation(int id);
 }
