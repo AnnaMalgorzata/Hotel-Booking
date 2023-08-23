@@ -12,14 +12,4 @@ internal class ReservationRepository : Repository<Reservation>, IReservationRepo
     {
         return Context.Set<Reservation>().Where(r => DateTime.Compare(r.DateFrom, from) >=0 && DateTime.Compare(r.DateTo, to) <=0).OrderByDescending(r => r.ReservationId);
     }
-
-    public async Task<string> GetGuestFirstname(Reservation reservation)
-    {
-        return reservation.Guest.Firstname;
-    }
-
-    public async Task<string> GetGuestLastname(Reservation reservation)
-    {
-        return reservation.Guest.Lastname;
-    }
 }
