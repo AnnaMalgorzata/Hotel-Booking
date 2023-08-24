@@ -1,3 +1,5 @@
+using HotelBooking.API;
+using HotelBooking.API.Middlewares;
 using HotelBooking.BusinessLogic;
 using HotelBooking.DataAccessLayer;
 
@@ -12,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDataAccessLayer();
 builder.Services.AddBusinessLogicLayer();
+builder.Services.AddApi();
 
 var app = builder.Build();
 
@@ -23,6 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionsMiddleware>();
 
 app.UseAuthorization();
 

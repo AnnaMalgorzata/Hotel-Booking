@@ -19,11 +19,6 @@ public class ReservationController : ControllerBase
     {
         var todoItem = await _reservationService.GetReservation(id);
 
-        if (todoItem == null)
-        {
-            return NotFound();
-        }
-
         return Ok(todoItem);
     }
 
