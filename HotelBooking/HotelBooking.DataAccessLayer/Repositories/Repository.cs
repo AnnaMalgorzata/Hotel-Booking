@@ -13,22 +13,22 @@ internal class Repository<T> : IRepository<T> where T : Entity
         Context = context;
     }
 
-    public T Get(int id)
+    public async Task<T> Get(int id)
     {
-        return Context.Set<T>().Find(id);
+        return await Context.Set<T>().FindAsync(id); 
     }
 
-    public IEnumerable<T> GetAll()
+    public async Task<IEnumerable<T>> GetAll()
     {
         return Context.Set<T>();
     }
 
     public void Add(T entity)
     {
-        Context.Set<T>().Add(entity);
+        Context.Set<T>().AddAsync(entity);
     }
 
-    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+    public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
     {
         return Context.Set<T>().Where(predicate);
     }

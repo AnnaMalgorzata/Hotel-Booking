@@ -1,3 +1,4 @@
+using HotelBooking.BusinessLogic;
 using HotelBooking.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDataAccessLayer();
+builder.Services.AddBusinessLogicLayer();
 
 var app = builder.Build();
 
