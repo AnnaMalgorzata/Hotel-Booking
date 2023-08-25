@@ -1,12 +1,12 @@
-﻿using HotelBooking.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using HotelBooking.DataAccessLayer.Database;
+using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
 internal class UnitOfWork : IUnitOfWork
 {
-    private readonly DbContext _context;
+    private readonly HotelContext _context;
 
-    public UnitOfWork(DbContext context)
+    public UnitOfWork(HotelContext context)
     {
         _context = context;
     }

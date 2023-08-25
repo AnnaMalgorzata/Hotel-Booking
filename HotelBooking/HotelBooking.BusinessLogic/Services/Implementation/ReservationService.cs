@@ -1,4 +1,5 @@
 ﻿using HotelBooking.BusinessLogic.Dtos;
+using HotelBooking.BusinessLogic.Exceptions;
 using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 
@@ -14,7 +15,11 @@ public class ReservationService : IReservationService
 
     public async Task<ReservationDto> GetReservation(int id)
     {
-        var reservation = await _reservationRepository.Get(id);
+        var reservation = await _reservationRepository.GetReservation(id);
+        if (reservation is null)
+        {
+            throw new NotFoundException($"Reservation with Id = {id} does not exists.");
+        }
         var roomInfos = new List<BasicRoomInfo>();
 
         roomInfos = reservation.Rooms.Select(c => new BasicRoomInfo(c.Type.ToString(), c.Capacity)).ToList();
