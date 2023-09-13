@@ -1,7 +1,5 @@
 ﻿using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.BusinessLogic.Services.Implementation;
-using HotelBooking.DataAccessLayer.Database;
-using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelBooking.BusinessLogic;

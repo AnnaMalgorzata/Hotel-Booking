@@ -23,6 +23,7 @@ public class ExceptionsMiddleware : IMiddleware
         var responseModel = ex switch
         {
             NotFoundException => new ResponseModel(HttpStatusCode.NotFound, ex.Message),
+            BadRequestException => new ResponseModel(HttpStatusCode.BadRequest, ex.Message),
             _ => new ResponseModel(HttpStatusCode.InternalServerError, ex.Message)
         };
 
