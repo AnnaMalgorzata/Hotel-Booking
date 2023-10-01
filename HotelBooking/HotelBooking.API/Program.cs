@@ -1,9 +1,6 @@
-using FluentValidation;
 using HotelBooking.API;
 using HotelBooking.API.Middlewares;
 using HotelBooking.BusinessLogic;
-using HotelBooking.BusinessLogic.Dtos;
-using HotelBooking.BusinessLogic.Validators;
 using HotelBooking.DataAccessLayer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +15,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDataAccessLayer();
 builder.Services.AddBusinessLogicLayer();
 builder.Services.AddApi();
-
-builder.Services.AddScoped<IValidator<GuestDto>, GuestValidator>();
 
 var app = builder.Build();
 

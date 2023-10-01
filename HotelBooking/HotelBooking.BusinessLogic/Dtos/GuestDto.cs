@@ -11,4 +11,13 @@ public class GuestDto
 
     public DateTime DateBirth { get; set; }
 
+/*    public GuestDto(string Firstname, string Lastname, string Email, string PhoneNumber, DateTime DateBirth) 
+    {
+        this.Firstname = Firstname;
+        this.Lastname = Lastname;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.DateBirth = DateBirth;
+    }*/
+
 }

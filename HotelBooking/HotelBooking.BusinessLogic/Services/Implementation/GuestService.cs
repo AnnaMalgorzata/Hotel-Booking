@@ -1,41 +1,30 @@
-﻿using FluentValidation.Results;
-using HotelBooking.BusinessLogic.Dtos;
+﻿using HotelBooking.BusinessLogic.Dtos;
 using HotelBooking.BusinessLogic.Exceptions;
 using HotelBooking.BusinessLogic.Services.Abstraction;
-using HotelBooking.BusinessLogic.Validators;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
-using System.Text;
 
 namespace HotelBooking.BusinessLogic.Services.Implementation;
-public class GuestService : IGuestService
+internal class GuestService : IGuestService
 {
     private readonly IGuestRepository _guestRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidationService<GuestDto> _validationService;
 
-    public GuestService(IGuestRepository guestRepository, IUnitOfWork unitOfWork)
+    public GuestService(IGuestRepository guestRepository, IUnitOfWork unitOfWork, IValidationService<GuestDto> validationService)
     {
         _guestRepository = guestRepository;
         _unitOfWork = unitOfWork;
+        _validationService = validationService;
     }
 
     public async Task AddGuest(GuestDto guestDto)
     {
-        var validator = new GuestValidator();
-        ValidationResult result = await validator.ValidateAsync(guestDto);
-        var message = new StringBuilder();
+        await _validationService.Validate(guestDto);
 
-        if (!result.IsValid)
+        if(await _guestRepository.GetGuest(guestDto.Email) != null)
         {
-            message.Append("Invalid fields: ");
-
-            foreach (var failure in result.Errors)
-            {
-                message.Append(failure.ErrorMessage + ", ");
-            }
-
-            throw new BadRequestException(message.Remove(message.Length - 2, 2).ToString());
-
+            throw new BadRequestException("A customer with this email already exists.");
         }
         else
         {
