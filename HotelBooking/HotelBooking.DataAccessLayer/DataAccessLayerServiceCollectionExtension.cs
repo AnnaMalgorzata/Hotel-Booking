@@ -15,6 +15,8 @@ public static class DataAccessLayerServiceCollectionExtension
         services.AddScoped<IReservationRepository, ReservationRepository>();
         services.AddScoped<IRoomRepository, RoomRepository>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         return services;
     }
 }

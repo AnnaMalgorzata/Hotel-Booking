@@ -1,7 +1,6 @@
 ﻿using HotelBooking.DataAccessLayer.Database;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
