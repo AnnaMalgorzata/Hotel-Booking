@@ -22,4 +22,12 @@ internal class ReservationRepository : Repository<Reservation>, IReservationRepo
             .Include(x => x.Guest)
             .SingleOrDefaultAsync();
     }
+
+    public async Task AddReservation(Reservation reservation)
+    {
+        await Context.Set<Reservation>()
+            .AddAsync(reservation);
+    }
+
+
 }
