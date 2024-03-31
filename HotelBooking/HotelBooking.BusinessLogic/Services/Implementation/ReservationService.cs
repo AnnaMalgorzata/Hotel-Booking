@@ -52,6 +52,13 @@ public class ReservationService : IReservationService
     {
         await _validationService.Validate(createReservationDto);
 
+        var guest = await _guestRepository.GetGuest(createReservationDto.GuestEmail);
+
+        if (guest is null)
+        {
+            throw new BadRequestException("You must register before making a reservation.");
+        }
+
         var roomInfos = createReservationDto.Rooms;
 
         var rooms = new List<Room>();
@@ -65,18 +72,14 @@ public class ReservationService : IReservationService
             {
                 throw new NotFoundException("Selected rooms are not available on the specified date.");
             }
-            else
-            {
-                price += room.PricePerNight * (createReservationDto.DateTo - createReservationDto.DateFrom).Days;
-                rooms.Add(room);
-            }
+            
+            price += room.PricePerNight * (createReservationDto.DateTo - createReservationDto.DateFrom).Days;
+            rooms.Add(room);
+            
         }
-        var guest = await _guestRepository.GetGuest(createReservationDto.GuestEmail);
+        
 
-        if (guest is null)
-        {
-            throw new BadRequestException("You must register before making a reservation.");
-        }
+        
 
         var reservation = new Reservation()
         {
