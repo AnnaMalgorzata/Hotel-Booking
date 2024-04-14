@@ -12,7 +12,6 @@ public static class BusinessLogicServiceCollectionExtension
     {
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IGuestService, GuestService>();
-        services.AddScoped<IRoomService, RoomService>();
         services.AddScoped(typeof(IValidationService<>), typeof(ValidationService<>));
         services.AddScoped<IValidator<GuestDto>, GuestValidator>();
         services.AddScoped<IValidator<CreateReservationDto>, ReservationValidator>();

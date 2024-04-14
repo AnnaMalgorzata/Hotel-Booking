@@ -11,7 +11,7 @@ internal class RoomRepository : Repository<Room>, IRoomRepository
     {
     }
 
-    public async Task<Room> GetRoom(RoomType roomType, int capacity, DateTime startDate, DateTime endDate)
+    public async Task<Room> GetRoom(RoomType roomType, int capacity, DateOnly startDate, DateOnly endDate)
     {
         return await Context.Set<Room>()
             .Where(room => (room.Capacity == capacity && room.Type == roomType)

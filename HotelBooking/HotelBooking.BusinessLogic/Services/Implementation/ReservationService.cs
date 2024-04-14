@@ -70,10 +70,11 @@ public class ReservationService : IReservationService
             
             if(room is null)
             {
-                throw new NotFoundException("Selected rooms are not available on the specified date.");
+                throw new BadRequestException("Selected rooms are not available on the specified date.");
             }
-            
-            price += room.PricePerNight * (createReservationDto.DateTo - createReservationDto.DateFrom).Days;
+
+            var daysDifference = createReservationDto.DateTo.DayNumber - createReservationDto.DateFrom.DayNumber;
+            price += room.PricePerNight * daysDifference;
             rooms.Add(room);
             
         }

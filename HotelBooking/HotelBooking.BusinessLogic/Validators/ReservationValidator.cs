@@ -10,7 +10,7 @@ internal class ReservationValidator : AbstractValidator<CreateReservationDto>
         
         RuleFor(dto => dto.DateFrom)
              .NotEmpty().WithMessage("Start date is required.")
-             .GreaterThan(DateTime.Now).WithMessage("The start date must be the future.");
+             .GreaterThan(DateOnly.FromDateTime(DateTime.Now)).WithMessage("The start date must be the future.");
 
         RuleFor(dto => dto.DateTo)
             .NotEmpty().WithMessage("End date is required.")

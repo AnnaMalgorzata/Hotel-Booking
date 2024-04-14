@@ -3,7 +3,7 @@
 namespace HotelBooking.DataAccessLayer.Repositories.Interfaces;
 public interface IReservationRepository : IRepository<Reservation>
 {
-    public Task<IEnumerable<Reservation>> GetReservationsFromDateRange(DateTime from, DateTime to);
+    public Task<IEnumerable<Reservation>> GetReservationsFromDateRange(DateOnly from, DateOnly to);
 
     Task<Reservation> GetReservation(int id);
 
