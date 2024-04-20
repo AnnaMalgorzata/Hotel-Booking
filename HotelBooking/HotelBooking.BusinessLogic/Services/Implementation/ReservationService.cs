@@ -13,8 +13,12 @@ public class ReservationService : IReservationService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidationService<CreateReservationDto> _validationService;
 
-    public ReservationService(IReservationRepository reservationRepository, IGuestRepository guestRepository,
-                                       IRoomRepository roomRepository, IUnitOfWork unitOfWork, IValidationService<CreateReservationDto> validationService)
+    public ReservationService(
+        IReservationRepository reservationRepository,
+        IGuestRepository guestRepository,
+        IRoomRepository roomRepository,
+        IUnitOfWork unitOfWork,
+        IValidationService<CreateReservationDto> validationService)
     {
         _reservationRepository = reservationRepository;
         _guestRepository = guestRepository;
@@ -48,7 +52,7 @@ public class ReservationService : IReservationService
         return dto;
     }
 
-    public async Task AddReservation(CreateReservationDto createReservationDto)
+    public async Task<int> AddReservation(CreateReservationDto createReservationDto)
     {
         await _validationService.Validate(createReservationDto);
 
@@ -68,7 +72,7 @@ public class ReservationService : IReservationService
         {
             var room = await _roomRepository.GetRoom((DataAccessLayer.Entities.RoomType)roomInfo.Type, roomInfo.Capacity, createReservationDto.DateFrom, createReservationDto.DateTo);
             
-            if(room is null)
+            if (room is null)
             {
                 throw new BadRequestException("Selected rooms are not available on the specified date.");
             }
@@ -76,11 +80,7 @@ public class ReservationService : IReservationService
             var daysDifference = createReservationDto.DateTo.DayNumber - createReservationDto.DateFrom.DayNumber;
             price += room.PricePerNight * daysDifference;
             rooms.Add(room);
-            
         }
-        
-
-        
 
         var reservation = new Reservation()
         {
@@ -95,5 +95,6 @@ public class ReservationService : IReservationService
         await _reservationRepository.AddReservation(reservation);
         _unitOfWork.Commit();
 
+        return reservation.ReservationId;
     }
 }

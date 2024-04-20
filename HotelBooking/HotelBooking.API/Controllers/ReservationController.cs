@@ -24,11 +24,11 @@ public class ReservationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddReservation(CreateReservationDto reservation)
+    public async Task<ActionResult<int>> AddReservation(CreateReservationDto reservation)
     {
-        await _reservationService.AddReservation(reservation);
+        var id = await _reservationService.AddReservation(reservation);
 
-        return Ok();
+        return Ok(id);
     }
 
 }

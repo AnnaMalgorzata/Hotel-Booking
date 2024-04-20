@@ -5,5 +5,5 @@ public interface IReservationService
 {
     public Task<ReservationDto> GetReservation(int id);
 
-    public Task AddReservation(CreateReservationDto reservation);
+    public Task<int> AddReservation(CreateReservationDto reservation);
 }
