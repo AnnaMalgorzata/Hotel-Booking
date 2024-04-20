@@ -1,12 +1,12 @@
 ﻿namespace HotelBooking.BusinessLogic.Dtos;
 public class BasicRoomInfo
 {
-    public string RoomType { get; set; }
+    public RoomType Type { get; set; }
     public int Capacity { get; set; }
 
-    public BasicRoomInfo(string RoomType, int Capacity) 
+    public BasicRoomInfo(RoomType type, int capacity) 
     {
-        this.RoomType = RoomType;
-        this.Capacity = Capacity;
+        Type = type;
+        Capacity = capacity;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace HotelBooking.BusinessLogic.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HotelBooking.BusinessLogic.Dtos;
 public class GuestDto
 {
     public string Firstname { get; set; }
@@ -9,15 +11,6 @@ public class GuestDto
 
     public string PhoneNumber { get; set; }
 
-    public DateTime DateBirth { get; set; }
-
-/*    public GuestDto(string Firstname, string Lastname, string Email, string PhoneNumber, DateTime DateBirth) 
-    {
-        this.Firstname = Firstname;
-        this.Lastname = Lastname;
-        this.Email = Email;
-        this.PhoneNumber = PhoneNumber;
-        this.DateBirth = DateBirth;
-    }*/
+    public DateOnly DateBirth { get; set; }
 
 }
