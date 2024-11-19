@@ -4,7 +4,7 @@ using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
-internal class ReservationRepository : Repository<Reservation>, IReservationRepository
+public class ReservationRepository : Repository<Reservation>, IReservationRepository
 {
     public ReservationRepository(HotelContext context) : base(context)
     { }

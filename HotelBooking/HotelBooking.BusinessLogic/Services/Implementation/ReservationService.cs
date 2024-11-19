@@ -3,9 +3,11 @@ using HotelBooking.BusinessLogic.Exceptions;
 using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("HotelBooking.Tests")]
 namespace HotelBooking.BusinessLogic.Services.Implementation;
-public class ReservationService : IReservationService
+internal class ReservationService : IReservationService
 {
     private readonly IReservationRepository _reservationRepository;
     private readonly IGuestRepository _guestRepository;
@@ -34,9 +36,8 @@ public class ReservationService : IReservationService
         {
             throw new NotFoundException($"Reservation with Id = {id} does not exists.");
         }
-        var roomInfos = new List<BasicRoomInfo>();
 
-        roomInfos = reservation.Rooms.Select(c => new BasicRoomInfo((Dtos.RoomType)c.Type, c.Capacity)).ToList();
+        var roomInfos = reservation.Rooms.Select(c => new BasicRoomInfo((Dtos.RoomType)c.Type, c.Capacity)).ToList();
 
         var dto = new ReservationDto()
         {
@@ -44,8 +45,8 @@ public class ReservationService : IReservationService
             DateFrom = reservation.DateFrom,
             DateTo = reservation.DateTo,
             Price = reservation.Price,
-            GuestFirstname = reservation.Guest.Lastname,
-            GuestLastname = reservation.Guest.Firstname,
+            GuestFirstname = reservation.Guest.Firstname,
+            GuestLastname = reservation.Guest.Lastname,
             RoomInfos = roomInfos
         };
 
