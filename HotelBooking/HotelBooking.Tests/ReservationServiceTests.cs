@@ -5,8 +5,6 @@ using HotelBooking.BusinessLogic.Services.Implementation;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using Moq;
-using System.Diagnostics;
-using System.Drawing;
 using Xunit;
 
 namespace HotelBooking.Test;

@@ -60,7 +60,6 @@ public class GuestServiceTests
         //Act & Assert
         Task action() => guestService.AddGuest(guestDto);
         var exception = await Assert.ThrowsAsync<BadRequestException>(action);
-        // Verify that GetGuest was called with the correct email
         _guestRepository.Verify(x => x.GetGuest(guest.Email), Times.Once);
         Assert.Equal("A customer with this email already exists.", exception.Message);
     }
