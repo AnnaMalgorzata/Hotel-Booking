@@ -112,7 +112,6 @@ public class ReservationServiceTests
         Task action() => reservationService.AddReservation(createReservationDto);
         var exception = await Assert.ThrowsAsync<BadRequestException>(action);
 
-        // Verify that GetGuest was called with the correct email
         _guestRepositoryMock.Verify(x => x.GetGuest(createReservationDto.GuestEmail), Times.Once);
 
         // Verify that GetRoom was called for each room in the request
@@ -121,7 +120,6 @@ public class ReservationServiceTests
             _roomRepositoryMock.Verify(x => x.GetRoom((DataAccessLayer.Entities.RoomType)roomInfo.Type, roomInfo.Capacity, createReservationDto.DateFrom, createReservationDto.DateTo), Times.Once);
         }
 
-        // Check exception message
         Assert.Equal("Selected rooms are not available on the specified date.", exception.Message);
     }
 
