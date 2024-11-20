@@ -4,7 +4,7 @@ using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace HotelBooking.DataAccessLayer.Repositories;
-internal class Repository<T> : IRepository<T> where T : Entity
+public class Repository<T> : IRepository<T> where T : Entity
 {
     protected readonly HotelContext Context;
 

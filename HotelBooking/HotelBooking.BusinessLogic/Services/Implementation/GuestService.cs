@@ -3,7 +3,9 @@ using HotelBooking.BusinessLogic.Exceptions;
 using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("HotelBooking.Tests")]
 namespace HotelBooking.BusinessLogic.Services.Implementation;
 internal class GuestService : IGuestService
 {
