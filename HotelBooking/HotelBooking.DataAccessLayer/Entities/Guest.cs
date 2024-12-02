@@ -7,6 +7,7 @@ public class Guest : Entity
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public DateOnly DateBirth { get; set; }
+    public string PasswordHash { get; set; }
 
     public ICollection<Reservation> Reservations { get; set; }    
 }
