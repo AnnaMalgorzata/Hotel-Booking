@@ -5,6 +5,8 @@ using HotelBooking.BusinessLogic.Services.Implementation;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using Moq;
+using System.Security.Cryptography;
+using System.Text;
 using Xunit;
 
 namespace HotelBooking.Tests;
@@ -44,6 +46,7 @@ public class GuestServiceTests
         var guestService = new GuestService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
 
         var guestDto = CreateGuestDto();
+        var hmac = new HMACSHA256();
 
         var guest = new Guest()
         {
@@ -53,6 +56,7 @@ public class GuestServiceTests
             Email = guestDto.Email,
             PhoneNumber = guestDto.PhoneNumber,
             DateBirth = guestDto.DateBirth,
+            PasswordHash = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes("SomePassword")))
         };
 
         _guestRepository.Setup(x => x.GetGuest(It.IsAny<string>())).ReturnsAsync(guest);
@@ -75,6 +79,7 @@ public class GuestServiceTests
             Firstname = firstName ?? "Anna",
             Lastname = lastName ?? "Xyz",
             PhoneNumber = phone ?? "123456789",
-            DateBirth = new DateOnly(2000, 9, 28)
+            DateBirth = new DateOnly(2000, 9, 28),
+            Password = "TestPassword123"
         };
 }

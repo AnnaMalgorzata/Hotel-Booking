@@ -4,6 +4,8 @@ using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
 
 [assembly: InternalsVisibleTo("HotelBooking.Tests")]
 namespace HotelBooking.BusinessLogic.Services.Implementation;
@@ -37,12 +39,21 @@ internal class GuestService : IGuestService
                 Email = guestDto.Email,
                 PhoneNumber = guestDto.PhoneNumber,
                 DateBirth = guestDto.DateBirth,
+                PasswordHash = HashPassword(guestDto.Password),
             };
 
             _guestRepository.Add(guest);
             _unitOfWork.Commit();
         }
+    }
 
+    private string HashPassword(string password)
+    {
+        using (var hmac = new HMACSHA256())
+        {
+            var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hashBytes);
+        }
     }
 }
 

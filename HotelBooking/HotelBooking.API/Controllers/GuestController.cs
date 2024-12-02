@@ -15,8 +15,8 @@ public class GuestController : ControllerBase
         _guestService = guestService;
     }
 
-    [HttpPost]
-    public async Task<ActionResult> AddGuest(GuestDto guestDto)
+    [HttpPost("register")]
+    public async Task<ActionResult> RegisterGuest(GuestDto guestDto)
     {
         await _guestService.AddGuest(guestDto);
 
