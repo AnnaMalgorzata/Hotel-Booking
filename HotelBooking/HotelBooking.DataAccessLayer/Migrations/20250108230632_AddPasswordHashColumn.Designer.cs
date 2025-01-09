@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.DataAccessLayer.Migrations
 {
     [DbContext(typeof(HotelContext))]
-    [Migration("20241202170917_AddPasswordHashColumn")]
+    [Migration("20250108230632_AddPasswordHashColumn")]
     partial class AddPasswordHashColumn
     {
         /// <inheritdoc />
@@ -50,6 +50,7 @@ namespace HotelBooking.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")

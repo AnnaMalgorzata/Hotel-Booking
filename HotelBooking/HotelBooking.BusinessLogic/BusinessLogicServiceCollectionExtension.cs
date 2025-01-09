@@ -11,9 +11,9 @@ public static class BusinessLogicServiceCollectionExtension
     public static IServiceCollection AddBusinessLogicLayer(this IServiceCollection services)
     {
         services.AddScoped<IReservationService, ReservationService>();
-        services.AddScoped<IGuestService, GuestService>();
+        services.AddScoped<IRegistrationService, RegistrationService>();
         services.AddScoped(typeof(IValidationService<>), typeof(ValidationService<>));
-        services.AddScoped<IValidator<GuestDto>, GuestValidator>();
+        services.AddScoped<IValidator<RegistrationDto>, RegistrationValidator>();
         services.AddScoped<IValidator<CreateReservationDto>, ReservationValidator>();
 
         return services;

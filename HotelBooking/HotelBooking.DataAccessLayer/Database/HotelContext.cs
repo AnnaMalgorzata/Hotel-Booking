@@ -39,6 +39,7 @@ public class HotelContext : DbContext
                 g.Property(g => g.PhoneNumber).HasMaxLength(9).IsRequired();
                 g.Property(g => g.Email).HasMaxLength(100).IsRequired();
                 g.HasIndex(g=> g.Email).IsUnique();
+                g.Property(g => g.PasswordHash).IsRequired();
                 g.ToTable("Guests");
             });
 

@@ -1,7 +1,7 @@
 ﻿using HotelBooking.BusinessLogic.Dtos;
 
 namespace HotelBooking.BusinessLogic.Services.Abstraction;
-public interface IGuestService
+public interface IRegistrationService
 {
-    public Task AddGuest(GuestDto guestDto);
+    public Task RegisterGuest(RegistrationDto guestDto);
 }
