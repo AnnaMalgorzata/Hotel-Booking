@@ -6,16 +6,18 @@ using HotelBooking.BusinessLogic.Utilities;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using Moq;
+using System.Security.Cryptography;
+using System.Text;
 using Xunit;
 
 namespace HotelBooking.Tests;
-public class RegistrationGuestServiceTests
+public class GuestServiceTests
 {
     private readonly Mock<IGuestRepository> _guestRepository;
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IValidationService<RegistrationDto>> _validationService;
 
-    public RegistrationGuestServiceTests()
+    public GuestServiceTests()
     {
         _guestRepository = new Mock<IGuestRepository>();
         _unitOfWork = new Mock<IUnitOfWork>();
@@ -23,7 +25,7 @@ public class RegistrationGuestServiceTests
     }
 
     [Fact]
-    public async Task RegisterGuest_WhenNewEmail()
+    public async Task AddGuest_WhenNewEmail()
     {
         //Arrange
         var guestService = new RegistrationService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
@@ -39,12 +41,13 @@ public class RegistrationGuestServiceTests
     }
 
     [Fact]
-    public async Task RegisterGuest_WhenEmailAlreadyExists_BadRequestException()
+    public async Task AddGuest_WhenEmailAlreadyExists_BadRequestException()
     {
         //Arrange
         var guestService = new RegistrationService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
 
         var guestDto = CreateGuestDto();
+        var hmac = new HMACSHA256();
 
         var guest = new Guest()
         {
