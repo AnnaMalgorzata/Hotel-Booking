@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooking.DataAccessLayer.Migrations
 {
     [DbContext(typeof(HotelContext))]
-    [Migration("20250108230632_AddPasswordHashColumn")]
-    partial class AddPasswordHashColumn
+    [Migration("20250118230254_AddPasswordHash")]
+    partial class AddPasswordHash
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

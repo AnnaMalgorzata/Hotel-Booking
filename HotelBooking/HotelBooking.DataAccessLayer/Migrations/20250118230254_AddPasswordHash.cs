@@ -5,32 +5,25 @@
 namespace HotelBooking.DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPasswordHashColumn : Migration
+    public partial class AddPasswordHash : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.AddColumn<string>(
                 name: "PasswordHash",
                 table: "Guests",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.DropColumn(
                 name: "PasswordHash",
-                table: "Guests",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                table: "Guests");
         }
     }
 }

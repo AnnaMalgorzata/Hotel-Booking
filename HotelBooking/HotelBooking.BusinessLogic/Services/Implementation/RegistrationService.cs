@@ -31,25 +31,23 @@ internal class RegistrationService : IRegistrationService
         {
             throw new BadRequestException("A customer with this email already exists.");
         }
-        else if (!string.Equals(guestDto.Password, guestDto.PasswordConfirmation, StringComparison.Ordinal))
+        if (!string.Equals(guestDto.Password, guestDto.PasswordConfirmation, StringComparison.Ordinal))
         {
             throw new BadRequestException("Passwords do not match.");
         }
-        else
+        
+        var guest = new Guest()
         {
-            var guest = new Guest()
-            {
-                Firstname = guestDto.Firstname,
-                Lastname = guestDto.Lastname,
-                Email = guestDto.Email,
-                PhoneNumber = guestDto.PhoneNumber,
-                DateBirth = guestDto.DateBirth,
-                PasswordHash = PasswordHasher.HashPassword(guestDto.Password),
-            };
-
-            _guestRepository.Add(guest);
-            _unitOfWork.Commit();
-        }
+            Firstname = guestDto.Firstname,
+            Lastname = guestDto.Lastname,
+            Email = guestDto.Email,
+            PhoneNumber = guestDto.PhoneNumber,
+            DateBirth = guestDto.DateBirth,
+            PasswordHash = PasswordHasher.HashPassword(guestDto.Password),
+        };
+        _guestRepository.Add(guest);
+        _unitOfWork.Commit();
+        
     }
 
     

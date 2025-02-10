@@ -11,13 +11,13 @@ using System.Text;
 using Xunit;
 
 namespace HotelBooking.Tests;
-public class GuestServiceTests
+public class RegistrationServiceTests
 {
     private readonly Mock<IGuestRepository> _guestRepository;
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IValidationService<RegistrationDto>> _validationService;
 
-    public GuestServiceTests()
+    public RegistrationServiceTests()
     {
         _guestRepository = new Mock<IGuestRepository>();
         _unitOfWork = new Mock<IUnitOfWork>();
@@ -25,7 +25,7 @@ public class GuestServiceTests
     }
 
     [Fact]
-    public async Task AddGuest_WhenNewEmail()
+    public async Task RegisterGuest_WhenNewEmail()
     {
         //Arrange
         var guestService = new RegistrationService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
@@ -41,7 +41,7 @@ public class GuestServiceTests
     }
 
     [Fact]
-    public async Task AddGuest_WhenEmailAlreadyExists_BadRequestException()
+    public async Task RegisterGuest_WhenEmailAlreadyExists_BadRequestException()
     {
         //Arrange
         var guestService = new RegistrationService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
@@ -69,11 +69,29 @@ public class GuestServiceTests
         Assert.Equal("A customer with this email already exists.", exception.Message);
     }
 
+    [Fact]
+    public async Task AddGuest_WhenPasswordsDoNotMatch_BadRequestException()
+    {
+        // Arrange
+        var guestService = new RegistrationService(_guestRepository.Object, _unitOfWork.Object, _validationService.Object);
+
+        var guestDto = CreateGuestDto(password: "TestPassword123", passwordConfirmation: "DifferentPassword456");
+
+        // Act & Assert
+        Task action() => guestService.RegisterGuest(guestDto);
+        var exception = await Assert.ThrowsAsync<BadRequestException>(action);
+
+        Assert.Equal("Passwords do not match.", exception.Message);
+    }
+
+
     private RegistrationDto CreateGuestDto(
         string email = null,
         string firstName = null,
         string lastName = null,
-        string phone = null)
+        string phone = null,
+        string password = null,
+        string passwordConfirmation = null)
         => new RegistrationDto
         {
             Email = email ?? "anna@gmail.com",
@@ -81,7 +99,7 @@ public class GuestServiceTests
             Lastname = lastName ?? "Xyz",
             PhoneNumber = phone ?? "123456789",
             DateBirth = new DateOnly(2000, 9, 28),
-            Password = "TestPassword123",
-            PasswordConfirmation = "TestPassword123"
+            Password = password ?? "TestPassword123",
+            PasswordConfirmation = passwordConfirmation ?? "TestPassword123"
         };
 }
