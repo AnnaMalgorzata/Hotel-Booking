@@ -8,17 +8,17 @@ namespace HotelBooking.API.Controllers;
 [ApiController]
 public class GuestController : ControllerBase
 {
-    private readonly IGuestService _guestService;
+    private readonly IRegistrationService _registrationService;
 
-    public GuestController(IGuestService guestService)
+    public GuestController(IRegistrationService registrationService)
     {
-        _guestService = guestService;
+        _registrationService = registrationService;
     }
 
-    [HttpPost]
-    public async Task<ActionResult> AddGuest(GuestDto guestDto)
+    [HttpPost("register")]
+    public async Task<ActionResult> RegisterGuest(RegistrationDto registrationDto)
     {
-        await _guestService.AddGuest(guestDto);
+        await _registrationService.RegisterGuest(registrationDto);
 
         return Ok();
     }
