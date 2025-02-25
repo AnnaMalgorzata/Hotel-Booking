@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HotelBooking.BusinessLogic.Dtos;
-internal class LoginDto
+public class LoginDto
 {
-    public string Email { get; init; }
-    public string Password { get; init; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }
