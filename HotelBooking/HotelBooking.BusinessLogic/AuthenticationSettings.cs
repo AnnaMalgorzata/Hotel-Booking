@@ -1,4 +1,4 @@
-﻿namespace HotelBooking.API;
+﻿namespace HotelBooking.BusinessLogic;
 
 public class AuthenticationSettings
 {

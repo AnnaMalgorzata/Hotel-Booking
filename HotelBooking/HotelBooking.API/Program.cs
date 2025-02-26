@@ -15,8 +15,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<AuthenticationSettings>(builder.Configuration.GetSection("Authentication"));
-
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -40,7 +38,7 @@ builder.Services.AddAuthentication(option =>
 
 
 builder.Services.AddDataAccessLayer();
-builder.Services.AddBusinessLogicLayer();
+builder.Services.AddBusinessLogicLayer(builder.Configuration);
 builder.Services.AddApi();
 
 var app = builder.Build();

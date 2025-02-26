@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using HotelBooking.API;
-using Microsoft.Extensions.Options;
 using HotelBooking.BusinessLogic.Dtos;
 using HotelBooking.BusinessLogic.Services.Abstraction;
+using Microsoft.AspNetCore.Authorization;
 
-namespace API.Controllers // Upewnij się, że przestrzeń nazw jest zgodna z Twoją strukturą.
+namespace API.Controllers
 {
     [Route("authentication")]
     [ApiController]
@@ -25,11 +20,16 @@ namespace API.Controllers // Upewnij się, że przestrzeń nazw jest zgodna z Tw
         [HttpPost("login")]
         public ActionResult Login([FromBody] LoginDto loginDto)
         {
-            string token = _authService.GenerateJwt(loginDto);
+            string token = _authService.Login(loginDto);
             
+            return Ok(token);
+        }
 
-
-            return Unauthorized();
+        [HttpGet("Test")]
+        [Authorize]
+        public ActionResult<string> Test()
+        {
+            return Ok("Token works");
         }
     }
 }

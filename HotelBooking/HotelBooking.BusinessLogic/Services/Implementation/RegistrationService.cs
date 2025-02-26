@@ -5,8 +5,6 @@ using HotelBooking.BusinessLogic.Utilities;
 using HotelBooking.DataAccessLayer.Entities;
 using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
 
 [assembly: InternalsVisibleTo("HotelBooking.Tests")]
 namespace HotelBooking.BusinessLogic.Services.Implementation;
