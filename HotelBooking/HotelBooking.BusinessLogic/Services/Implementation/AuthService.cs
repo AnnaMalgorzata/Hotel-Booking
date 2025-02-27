@@ -21,7 +21,7 @@ internal class AuthService : IAuthService
         _authenticationSettings = authenticationSettings.Value;
     }
 
-    public string Login(LoginDto loginDto) //nazwa login
+    public string Login(LoginDto loginDto)
     {
         var guest = _context.Guests.FirstOrDefault(g => g.Email == loginDto.Email);
 
@@ -30,12 +30,11 @@ internal class AuthService : IAuthService
             throw new BadRequestException("Invalid username or password");
         }
 
-        var passwordHash = "soL/lHRA7/aUlEPaD+Vo+DGJVDXoWzgDzrvveofO9CI=";//PasswordHasher.HashPassword(loginDto.Password); -> to samo hasło hashuje inaczej 
-        var passwordIsOk = _context.Guests.Any(g => g.PasswordHash == passwordHash);
-
-        if(!passwordIsOk)
+        bool verified = PasswordHasher.Verify(loginDto.Password, guest.PasswordHash);
+        
+        if (!verified)
         {
-            throw new BadRequestException("Invalid username or password");
+            throw new BadRequestException("Invalid username or password :(");
         }
 
         //Generowanie tokena:
