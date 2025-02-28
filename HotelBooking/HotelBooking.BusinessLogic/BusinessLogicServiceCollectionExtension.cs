@@ -16,6 +16,7 @@ public static class BusinessLogicServiceCollectionExtension
         services.AddScoped(typeof(IValidationService<>), typeof(ValidationService<>));
         services.AddScoped<IValidator<RegistrationDto>, RegistrationValidator>();
         services.AddScoped<IValidator<CreateReservationDto>, ReservationValidator>();
+        services.AddSingleton<IJWTService, JWTService>();
         services.AddScoped<IAuthService, AuthService>();
 
         services.Configure<AuthenticationSettings>(configuration.GetSection("Authentication"));

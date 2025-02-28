@@ -2,28 +2,23 @@
 using HotelBooking.BusinessLogic.Exceptions;
 using HotelBooking.BusinessLogic.Services.Abstraction;
 using HotelBooking.BusinessLogic.Utilities;
-using HotelBooking.DataAccessLayer.Database;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using HotelBooking.DataAccessLayer.Repositories.Interfaces;
 
 namespace HotelBooking.BusinessLogic.Services.Implementation;
 internal class AuthService : IAuthService
 {
-    private readonly HotelContext _context; 
-    private readonly AuthenticationSettings _authenticationSettings;
+    private readonly IGuestRepository _guestRepository;
+    private readonly IJWTService _jwtService;
 
-    public AuthService(HotelContext context, IOptions<AuthenticationSettings> authenticationSettings)
+    public AuthService(IGuestRepository guestRepository, IJWTService jwtService)
     {
-        _context = context; 
-        _authenticationSettings = authenticationSettings.Value;
+        _guestRepository = guestRepository;
+        _jwtService = jwtService;
     }
 
-    public string Login(LoginDto loginDto)
+    public async Task<string> Login(LoginDto loginDto)
     {
-        var guest = _context.Guests.FirstOrDefault(g => g.Email == loginDto.Email);
+        var guest = await _guestRepository.GetGuest(loginDto.Email);
 
         if (guest == null)
         {
@@ -37,25 +32,8 @@ internal class AuthService : IAuthService
             throw new BadRequestException("Invalid username or password :(");
         }
 
-        //Generowanie tokena:
-        var claims = new[]
-               {
-                    new Claim(JwtRegisteredClaimNames.Sub, loginDto.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
+        var token = _jwtService.GenerateJWT(loginDto.Email);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JWTKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: _authenticationSettings.JWTIssuer,
-            audience: _authenticationSettings.JWTIssuer, 
-            claims: claims,
-            expires: DateTime.Now.AddDays(_authenticationSettings.JWTExpireDays), 
-            signingCredentials: creds);
-
-        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-        return jwt;
+        return token;
     }
 }

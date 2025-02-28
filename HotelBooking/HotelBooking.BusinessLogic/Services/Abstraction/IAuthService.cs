@@ -3,5 +3,5 @@
 namespace HotelBooking.BusinessLogic.Services.Abstraction;
 public interface IAuthService
 {
-    string Login(LoginDto loginDto);
+    Task<string> Login(LoginDto loginDto);
 }
